@@ -1,0 +1,2 @@
+This is the path for my xyz.txt file:
+/home/kriti/Desktop/javaprogram/xyz.txt
