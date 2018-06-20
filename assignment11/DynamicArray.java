@@ -6,7 +6,7 @@ public class DynamicArray {
      private  int nextIndex;
      public DynamicArray(){
                    arr = new int[5];
-                   System.out.println("Stack Implementation");
+                   System.out.println("Stack Implementation with intial size 5");
            }
            public void set(int index, int element) {
                   if (index > nextIndex) {
@@ -69,23 +69,29 @@ public class DynamicArray {
         Scanner sc =  new Scanner(System.in);
 		DynamicArray obj=new DynamicArray();
                 System.out.println(obj.isEmpty());
-                int ans,addElement;
-		for(int i=0;i<10;i++)
+                int ans,addElement,num;
+                System.out.println("Enter the number of elements");
+                 num = sc.nextInt();
+		for(int i=0;i<num;i++)
 		{
 			addElement = sc.nextInt();
                obj.set(i,addElement);
         }
+        System.out.print("Size right now is:");
 		System.out.println(obj.size());
 		obj.pop();
+		System.out.print("Size after pop is :");
 		System.out.println(obj.size());
                 try{
+                	System.out.println("Trying to get at element at index 7");
                     int n=obj.get(7);//accessing a[7];
                     if(n==-1)
                         throw new IOException();
                 }
                 catch(IOException e){
-                        System.out.println("Exception Ocurred,Not in Array");
+                        System.out.println("Exception Occurred,Not found in Array");
                 }		
+        System.out.print("Is my array empty? ");
 		System.out.println(obj.isEmpty());
     }
 }
