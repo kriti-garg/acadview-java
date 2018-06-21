@@ -1,2 +1,2 @@
-/home/kriti/Pictures
+/home/kriti/Desktop/java_assignments
 /home/kriti/Desktop
