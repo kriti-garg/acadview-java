@@ -16,21 +16,30 @@ public class Project {
 	    //System.out.println("1 2 3");
 	}
    public static void main(String[] args) throws IOException{
+	   Scanner sc = new Scanner(System.in);
+	   String str1,str2;
+	   System.out.println("enter the path where you want to search the files");
+	   str1 = sc.nextLine();
+	   System.out.println("enter the path where you want to store the content");
+	   str2 = sc.nextLine();
+	   System.out.println(str1);
+       System.out.println(str2);
+	   
 	    List<File> list = new ArrayList<File>();
 	    List<String> listFile = new ArrayList<String>();
-	    listf("/home/kriti/Desktop",list,listFile);
+	    listf(str1,list,listFile);
 	    int i = list.size();
+	    
+	    File outputFile = new File(str2+"/Project.csv");
+		outputFile.createNewFile();
+	   
+	    FileWriter inputFile = new FileWriter(outputFile);
+	    inputFile.write("FILENAME , FILEPATH\n");
 	    for(int j=0;j<i;j++) {
-	    	 System.out.print(listFile.get(j));
-	    	 System.out.print(" , ");
-	    	 System.out.println(list.get(j));
+	    	 inputFile.write(listFile.get(j));
+	    	 inputFile.write(",");
+	    	inputFile.write(list.get(j).toString() + "\n");
 	    }
-	   /* for(File str : list) {
-	    System.out.println(str);
-	    }
-	    for(String str : listFile) {
-	    	System.out.println(str);
-	    }
-	    System.out.println(i);*/
+	    inputFile.close();
 	}
 }
