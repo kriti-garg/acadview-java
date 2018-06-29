@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.kriti.noteapp.CreateNote"
+    tools:showIn="@layout/activity_create">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="61dp"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="112dp"
+        android:text="Title"
+        android:textSize="30dp"
+        />
+
+    <TextView
+        android:id="@+id/note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignStart="@+id/title"
+        android:layout_centerVertical="true"
+        android:text="Note"
+        android:textSize="30dp"/>
+
+    <EditText
+        android:id="@+id/addTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/title"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/note"
+        android:layout_toRightOf="@+id/note"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="enter title" />
+
+    <EditText
+        android:id="@+id/addNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/addTitle"
+        android:layout_alignStart="@+id/addTitle"
+        android:layout_alignTop="@+id/note"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="enter your note" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/note"
+        android:layout_alignStart="@+id/note"
+        android:layout_below="@+id/addNote"
+        android:layout_marginTop="70dp"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/save"
+        android:layout_alignEnd="@+id/addNote"
+        android:layout_alignRight="@+id/addNote"
+        android:layout_marginEnd="43dp"
+        android:layout_marginRight="43dp"
+        android:text="back" />
+
+
+</RelativeLayout>
