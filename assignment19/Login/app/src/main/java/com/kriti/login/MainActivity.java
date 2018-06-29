@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
               if (var != -1) {
                   Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                   startActivity(intent);
-                  Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(getApplicationContext(), "Successfulhharearely Registered", Toast.LENGTH_SHORT).show();
               }
               else
               {

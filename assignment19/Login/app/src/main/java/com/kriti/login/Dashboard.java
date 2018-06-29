@@ -19,15 +19,16 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RegDbHelper regDbHelper = new RegDbHelper(this);
-        SharedPreferences sharedPreferences = this.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+        Context context = Dashboard.this;
+        SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+
+        //SharedPreferences sharedPreferences = this.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
         //SharedPreferences.Editor editor = sharedPreferences.edit();
-       String var = sharedPreferences.getString("UName", "");
-      // regDbHelper.fetchData(var);
-        Log.v("var",var);
-       /* editor.putString("UName", email);
-        editor.putString("Password", password);
-        editor.commit();
-        return sharedPreferences.getString("Email", "");*/
+        String var = sharedPreferences.getString(LoginActivity.Name,"");
+        String[] vals = regDbHelper.fetchData(var);
+        Log.v("id", vals[0]);
+        Log.v("Email", vals[1]);
+        Log.v("Name", vals[2]);
 
         // int result = regDbHelper.verifyLogin(et_username,et_password);
     }

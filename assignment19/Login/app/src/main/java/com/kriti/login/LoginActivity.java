@@ -24,6 +24,9 @@ public class LoginActivity extends AppCompatActivity {
     public EditText username;
     private EditText password;
     boolean valid = true;
+    SharedPreferences sharedPreferences;
+    public static final String MyPREFERENCES = "Session" ;
+    public static final String Name = "nameKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,9 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         Button button = findViewById(R.id.Login);
+        Context context = LoginActivity.this;
+        sharedPreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,8 +80,6 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void onSignUpSuccess(){
         if(valid==true){
-            SharedPreferences sharedPreferences = this.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
             Log.i("username", et_username);
             Log.i("password", et_password);
             RegDbHelper regDbHelper = new RegDbHelper(this);
@@ -94,10 +98,10 @@ public class LoginActivity extends AppCompatActivity {
            else if(result==2){
                Toast.makeText(getApplicationContext(), "Logged In successfully", Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(LoginActivity.this, Dashboard.class);
-              // startActivity(intent);
-               editor.putString("UName", et_username);
+               SharedPreferences.Editor editor = sharedPreferences.edit();
+               editor.putString(Name,  et_username);
                editor.commit();
-
+               startActivity(intent);
            }
            Log.isLoggable("result" ,result);
         }
