@@ -64,5 +64,34 @@ public class RegDbHelper extends SQLiteOpenHelper {
         }
         return newRowId;
     }
+    public int verifyLogin(String userName, String password){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(
+                RegEntry.TABLE_NAME,
+                null,
+                " username = ?",
+                new String[]{userName},
+                null,
+                null,
+                null);
+
+        if(cursor.getCount()==0)
+            return 0; //Username is not there in the database
+
+        else {
+            Cursor cursor1 = db.query(
+                    RegEntry.TABLE_NAME,
+                    null,
+                    " username = ? and password = ?",
+                    new String[]{userName, password},
+                    null,
+                    null,
+                    null);
+            if(cursor1.getCount()==1)
+                return 2; //Username and password are both correct
+            else
+                return 1; // Password is wrong
+        }
+    }
 
 }

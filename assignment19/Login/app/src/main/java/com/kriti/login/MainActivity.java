@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        name = (EditText) findViewById(R.id.et_name);
+        name = findViewById(R.id.et_name);
         email = findViewById(R.id.et_mail);
         phone = findViewById(R.id.et_phone);
         password = findViewById(R.id.et_password);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 email.setError("Please enter valid email address");
                 valid = false;
             }
-            if(!et_password.equals(c_password) || et_password==""||c_password=="")
+            if(!et_password.equals(c_password) || et_password==""||c_password=="" || et_password.isEmpty() || c_password.isEmpty())
             {
                 password.setError("Passwords don't match");
                 valid = false;
@@ -83,11 +83,11 @@ public class MainActivity extends AppCompatActivity {
               if (var != -1) {
                   Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                   startActivity(intent);
-                  Toast.makeText(getApplicationContext(), "registered", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
               }
               else
               {
-                  Toast.makeText(getApplicationContext(), "username or email id's are already registered", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(getApplicationContext(), "Username or Email id is already registered", Toast.LENGTH_SHORT).show();
               }
           }
     }
