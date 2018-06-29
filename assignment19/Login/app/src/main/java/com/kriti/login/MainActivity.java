@@ -35,7 +35,16 @@ public class MainActivity extends AppCompatActivity {
                 checkDataEntered();
                 Log.i("clicked",et_mail);
             }
-        });}
+        });
+        Button button1 = findViewById(R.id.Login);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
         public void intialise(){
             et_name = name.getText().toString().trim();
             et_mail = email.getText().toString().trim();

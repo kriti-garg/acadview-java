@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     android:baselineAligned="true"
     tools:context=".LoginActivity">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Log In!!"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="35dp" />
 
     <EditText
         android:id="@+id/username"
@@ -38,20 +49,32 @@
         android:id="@+id/Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/Register"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="45dp"
         android:text="Login" />
 
-
-   <!-- <Button
-        android:id="@+id/Forget_Password"
+    <Button
+        android:id="@+id/Register"
         android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:layout_above="@+id/Create_Account"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="22dp"
-        android:text="Forget Password" />-->
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Login"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/Login"
+        android:layout_marginBottom="31dp"
+        android:text="Register" />
+
+
+
+
+    <!-- <Button
+         android:id="@+id/Forget_Password"
+         android:layout_width="wrap_content"
+         android:layout_height="46dp"
+         android:layout_above="@+id/Create_Account"
+         android:layout_centerHorizontal="true"
+         android:layout_marginBottom="22dp"
+         android:text="Forget Password" />-->
 
     <!--<Button
         android:id="@+id/Create_Account"

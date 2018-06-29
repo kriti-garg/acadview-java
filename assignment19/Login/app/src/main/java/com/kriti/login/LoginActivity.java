@@ -33,7 +33,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 checkDataEntered();
-                Toast.makeText(getApplicationContext(),"login successful",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button reg = findViewById(R.id.Register);
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -44,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     public void checkDataEntered() {
         intialise();
         if(!validate()){
-            Toast.makeText(this,"Signup has failed",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Login has failed",Toast.LENGTH_SHORT).show();
         }
         else
             onSignUpSuccess();
@@ -74,14 +81,15 @@ public class LoginActivity extends AppCompatActivity {
                         + " " + cursor.getString(3));
             }
            if(result==0){
-               Toast.makeText(getApplicationContext(),"username not valid",Toast.LENGTH_SHORT).show();
+               Toast.makeText(getApplicationContext(),"Invalid username",Toast.LENGTH_SHORT).show();
            }
            else if(result==1){
-               Toast.makeText(getApplicationContext(),"enter a valid password",Toast.LENGTH_SHORT).show();
+               Toast.makeText(getApplicationContext(),"Invalid password",Toast.LENGTH_SHORT).show();
            }
            else if(result==2){
-               Toast.makeText(getApplicationContext(), "login successful", Toast.LENGTH_SHORT).show();
+               Toast.makeText(getApplicationContext(), "Logged In successfully", Toast.LENGTH_SHORT).show();
            }
+           Log.isLoggable("result" ,result);
         }
     }
 
