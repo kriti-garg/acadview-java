@@ -94,7 +94,7 @@ public class RegDbHelper extends SQLiteOpenHelper {
                 return 1; // Password is wrong
         }
     }
-    public void fetchData(String username){
+    public String[] fetchData(String username){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(
                 RegEntry.TABLE_NAME,
@@ -104,9 +104,16 @@ public class RegDbHelper extends SQLiteOpenHelper {
                 null,
                 null,
                 null);
+
+        String[] str = new String[3];
         if(cursor.getCount()==1){
-            Log.v("Hello", "details: " + cursor.getInt(0) + " " + cursor.getString(1) + " " + cursor.getString(2)
-                    + " " + cursor.getString(3));
+            cursor.moveToFirst();
+            str[0] = String.valueOf(cursor.getInt(0));
+            str[1] = cursor.getString(1);
+            str[2] = cursor.getString(2);
+            return str;
+            //+ cursor.getInt(0) + " " + cursor.getString(1) + " " + cursor.getString(2)
+              //      + " " + cursor.getString(3));
         }
         else
         {
@@ -114,6 +121,7 @@ public class RegDbHelper extends SQLiteOpenHelper {
                     + " " + cursor.getString(3));
             //Toast.makeText(getApplicationContext(),"Username or Email id is already registered", Toast.LENGTH_SHORT).show();
         }
+        return str;
     }
 
 
