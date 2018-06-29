@@ -24,6 +24,10 @@
             android:label="@string/title_activity_create_note"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <provider
+            android:name=".NotesProvider"
+            android:authorities="com.kriti.NoteApp"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
  */
 final class NoteContract {
     private NoteContract(){ }
-    public static final String CONTENT_AUTHORITY = "com.example.kriti.noteapp";
+    public static final String CONTENT_AUTHORITY = "com.kriti.noteapp";
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_NOTES = "notes";
     public final static class NoteEntry implements BaseColumns {
