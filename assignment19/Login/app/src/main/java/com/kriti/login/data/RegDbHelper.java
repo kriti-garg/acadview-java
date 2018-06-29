@@ -13,17 +13,17 @@ import com.kriti.login.data.RegContract.RegEntry;
  */
 
 public class RegDbHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "registration_details.db";
+    private static final String DATABASE_NAME = "reg_details.db";
     private static final int DATABASE_VERSION = 1;
     public RegDbHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
     }
     public void onCreate(SQLiteDatabase db){
-        String SQL_CREATE_REG_DETAILS_TABLE = "CREATE_TABLE " + RegEntry.TABLE_NAME + "("
-                + RegEntry._ID + "  INTEGER PRIMARY KEY AUTOINCREMENT,"
-                +RegEntry.COLUMN_EMAIL + "  TEXT NOT NULL,"
-                +RegEntry.COLUMN_USERNAME + "TEXT NOT NULL,"
-                +RegEntry.COLUMN_PASSWORD + "TEXT NOT NULL);";
+        String SQL_CREATE_REG_DETAILS_TABLE = "CREATE TABLE " + RegEntry.TABLE_NAME + " ("
+                + RegEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                +RegEntry.COLUMN_EMAIL + " TEXT NOT NULL UNIQUE, "
+                +RegEntry.COLUMN_USERNAME + " TEXT NOT NULL UNIQUE, "
+                +RegEntry.COLUMN_PASSWORD + " TEXT NOT NULL);";
         Log.v("RegDbHelper" , "create table: " + SQL_CREATE_REG_DETAILS_TABLE);
         db.execSQL(SQL_CREATE_REG_DETAILS_TABLE);
 
@@ -48,19 +48,21 @@ public class RegDbHelper extends SQLiteOpenHelper {
         );
         return  cursor;
     }
-    public void insertDetails(String emailString , String usernameString , String passwordString){
+    public long insertDetails(String emailString , String usernameString , String passwordString){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(RegContract.RegEntry.COLUMN_EMAIL,emailString);
-        values.put(RegContract.RegEntry.COLUMN_USERNAME,emailString);
-        values.put(RegContract.RegEntry.COLUMN_PASSWORD,emailString);
+        values.put(RegContract.RegEntry.COLUMN_USERNAME,usernameString);
+        values.put(RegContract.RegEntry.COLUMN_PASSWORD,passwordString);
         long newRowId = db.insert(RegContract.RegEntry.TABLE_NAME,null,values);
         if(newRowId==-1){
             Log.v("RegDbHelper", "Error in insertion");
         }
         else{
             Log.v("RegDbHelper","insertion Successful");
+
         }
+        return newRowId;
     }
 
 }

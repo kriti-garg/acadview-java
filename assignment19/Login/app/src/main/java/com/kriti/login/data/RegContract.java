@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
 final class RegContract {
     private RegContract(){ }
     public final static class RegEntry implements BaseColumns{
-        public final static String TABLE_NAME ="registration_details";
+        public final static String TABLE_NAME ="reg_details";
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_USERNAME ="username";
         public final static String COLUMN_EMAIL = "email";

@@ -2,6 +2,7 @@ package com.kriti.login;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.kriti.login.data.RegDbHelper;
+
 public class MainActivity extends AppCompatActivity {
    private String et_name,et_mail,et_phone,et_password,c_password;
     boolean valid =true;
@@ -19,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final SharedPreferences sharedPreferences = this.getSharedPreferences("prefs", Context.MODE_PRIVATE);
         name = (EditText) findViewById(R.id.et_name);
         email = findViewById(R.id.et_mail);
         phone = findViewById(R.id.et_phone);
@@ -30,11 +33,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkDataEntered();
-                sharedPreferences.edit().putString("username","xyz").apply();
-                et_name= sharedPreferences.getString("username","");
-                et_mail= sharedPreferences.getString("email","");
-                et_phone= sharedPreferences.getString("phone","");
-                et_password = sharedPreferences.getString("password","");
                 Log.i("clicked",et_mail);
             }
         });}
@@ -71,11 +69,26 @@ public class MainActivity extends AppCompatActivity {
             return valid;
     }
     public void onSignUpSuccess(){
-          if(valid == true )
-          {
-              Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-              startActivity(intent);
-              Toast.makeText(getApplicationContext(), "registered", Toast.LENGTH_SHORT).show();
+          if(valid == true ) {
+              Log.i("name", et_name);
+              Log.i("email", et_mail);
+              Log.i("password", et_password);
+              RegDbHelper regDbHelper = new RegDbHelper(this);
+              long var = regDbHelper.insertDetails(et_mail, et_name, et_password);
+              Cursor cursor = regDbHelper.readDetails();
+              while (cursor.moveToNext()) {
+                  Log.v("Hello", "details: " + cursor.getInt(0) + " " + cursor.getString(1) + " " + cursor.getString(2)
+                          + " " + cursor.getString(3));
+              }
+              if (var != -1) {
+                  Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                  startActivity(intent);
+                  Toast.makeText(getApplicationContext(), "registered", Toast.LENGTH_SHORT).show();
+              }
+              else
+              {
+                  Toast.makeText(getApplicationContext(), "username or email id's are already registered", Toast.LENGTH_SHORT).show();
+              }
           }
     }
 
