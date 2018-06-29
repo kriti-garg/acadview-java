@@ -1,6 +1,9 @@
 package com.kriti.noteapp;
 
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,9 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-
-public class MainActivity extends AppCompatActivity {
-
+import android.widget.ListView;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
+    private static final int PRODUCT_LOADER = 0;
+    private NotesAdapter mCursorAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        ListView noteListView = findViewById(R.id.list);
+        View emptyView = findViewById(R.id.empty_view);
+        noteListView.setEmptyView(emptyView);
+        mCursorAdapter = new NotesAdapter(this);
+        noteListView.setAdapter(mCursorAdapter);
+        getLoaderManager().initLoader(PRODUCT_LOADER,null,this);
     }
 
     @Override
@@ -52,4 +64,36 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+       // Uri baseUri = ;
+        // Define a projection that specifies the columns from the table we care about.
+        String[] projection = {
+                NoteContract.NoteEntry._ID,
+                NoteContract.NoteEntry.COLUMN_TITLE,
+                NoteContract.NoteEntry.COLUMN_NOTE,
+        };
+
+        // This loader will execute the ContentProvider's query method on a background thread
+        return new CursorLoader(this,   // Parent activity context
+                NoteContract.NoteEntry.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);                  // Default sort order
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        // Update {@link ProductCursorAdapter} with this new cursor containing updated product data
+        mCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        // Callback called when the data needs to be deleted
+        mCursorAdapter.swapCursor(null);
+    }
+
 }
