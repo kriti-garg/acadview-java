@@ -1,7 +1,5 @@
 package com.kriti.login;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 name.setError("Please enter valid name");
                 valid=false;
             }
+            if(et_phone.isEmpty()|| et_phone.length()==11){
+                phone.setError("Please enter a valid phone number");
+                valid=false;
+            }
             if(et_mail.isEmpty() ||!Patterns.EMAIL_ADDRESS.matcher(et_mail).matches()){
                 email.setError("Please enter valid email address");
                 valid = false;
@@ -80,19 +82,20 @@ public class MainActivity extends AppCompatActivity {
     public void onSignUpSuccess(){
           if(valid == true ) {
               Log.i("name", et_name);
+              Log.i("phone",et_phone);
               Log.i("email", et_mail);
               Log.i("password", et_password);
               RegDbHelper regDbHelper = new RegDbHelper(this);
-              long var = regDbHelper.insertDetails(et_mail, et_name, et_password);
+              long var = regDbHelper.insertDetails(et_mail, et_name, et_password,et_phone);
               Cursor cursor = regDbHelper.readDetails();
               while (cursor.moveToNext()) {
                   Log.v("Hello", "details: " + cursor.getInt(0) + " " + cursor.getString(1) + " " + cursor.getString(2)
-                          + " " + cursor.getString(3));
+                          + " " + cursor.getString(3) + " " + cursor.getString(4));
               }
               if (var != -1) {
                   Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                   startActivity(intent);
-                  Toast.makeText(getApplicationContext(), "Successfulhharearely Registered", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
               }
               else
               {

@@ -6,37 +6,38 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.kriti.login.data.RegContract.RegEntry;
 /**
  * Created by kriti on 29/6/18.
  */
-
 public class RegDbHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "reg_details.db";
+    private static final String DATABASE_NAME = "reg_detail.db";
     private static final int DATABASE_VERSION = 1;
     public RegDbHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
     }
     public void onCreate(SQLiteDatabase db){
         String SQL_CREATE_REG_DETAILS_TABLE = "CREATE TABLE " + RegEntry.TABLE_NAME + " ("
-                + RegEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                +RegEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +RegEntry.COLUMN_EMAIL + " TEXT NOT NULL UNIQUE, "
                 +RegEntry.COLUMN_USERNAME + " TEXT NOT NULL UNIQUE, "
-                +RegEntry.COLUMN_PASSWORD + " TEXT NOT NULL);";
+                +RegEntry.COLUMN_PASSWORD + " TEXT NOT NULL, "
+                +RegEntry.COLUMN_PHONE + " TEXT NOT NULL);";
         Log.v("RegDbHelper" , "create table: " + SQL_CREATE_REG_DETAILS_TABLE);
         db.execSQL(SQL_CREATE_REG_DETAILS_TABLE);
 
     }
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){ }
+
     public Cursor readDetails(){
         SQLiteDatabase db = getReadableDatabase();
         String[] projection = {
                 RegEntry._ID,
                 RegEntry.COLUMN_EMAIL,
                 RegEntry.COLUMN_USERNAME,
-                RegEntry.COLUMN_PASSWORD
+                RegEntry.COLUMN_PASSWORD,
+                RegEntry.COLUMN_PHONE
         };
         Cursor cursor =db.query(
                 RegEntry.TABLE_NAME,
@@ -49,12 +50,13 @@ public class RegDbHelper extends SQLiteOpenHelper {
         );
         return  cursor;
     }
-    public long insertDetails(String emailString , String usernameString , String passwordString){
+    public long insertDetails(String emailString , String usernameString , String passwordString ,String phoneString){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(RegContract.RegEntry.COLUMN_EMAIL,emailString);
         values.put(RegContract.RegEntry.COLUMN_USERNAME,usernameString);
         values.put(RegContract.RegEntry.COLUMN_PASSWORD,passwordString);
+        values.put(RegContract.RegEntry.COLUMN_PHONE,phoneString);
         long newRowId = db.insert(RegContract.RegEntry.TABLE_NAME,null,values);
         if(newRowId==-1){
             Log.v("RegDbHelper", "Error in insertion");
@@ -105,21 +107,19 @@ public class RegDbHelper extends SQLiteOpenHelper {
                 null,
                 null);
 
-        String[] str = new String[3];
+        String[] str = new String[5];
         if(cursor.getCount()==1){
             cursor.moveToFirst();
             str[0] = String.valueOf(cursor.getInt(0));
             str[1] = cursor.getString(1);
             str[2] = cursor.getString(2);
+            str[3] = cursor.getString(4);
             return str;
-            //+ cursor.getInt(0) + " " + cursor.getString(1) + " " + cursor.getString(2)
-              //      + " " + cursor.getString(3));
         }
         else
         {
             Log.v("hiiiii", "details: " + cursor.getInt(0) + " " + cursor.getString(1) + " " + cursor.getString(2)
-                    + " " + cursor.getString(3));
-            //Toast.makeText(getApplicationContext(),"Username or Email id is already registered", Toast.LENGTH_SHORT).show();
+                    + " " + cursor.getString(3) + " " + cursor.getString(4));
         }
         return str;
     }
