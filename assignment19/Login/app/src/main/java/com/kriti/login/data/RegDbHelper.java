@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.kriti.login.data.RegContract.RegEntry;
 /**
@@ -93,5 +94,27 @@ public class RegDbHelper extends SQLiteOpenHelper {
                 return 1; // Password is wrong
         }
     }
+    public void fetchData(String username){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(
+                RegEntry.TABLE_NAME,
+                null,
+                " username = ?",
+                new String[]{username},
+                null,
+                null,
+                null);
+        if(cursor.getCount()==1){
+            Log.v("Hello", "details: " + cursor.getInt(0) + " " + cursor.getString(1) + " " + cursor.getString(2)
+                    + " " + cursor.getString(3));
+        }
+        else
+        {
+            Log.v("hiiiii", "details: " + cursor.getInt(0) + " " + cursor.getString(1) + " " + cursor.getString(2)
+                    + " " + cursor.getString(3));
+            //Toast.makeText(getApplicationContext(),"Username or Email id is already registered", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 }

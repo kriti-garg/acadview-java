@@ -1,6 +1,8 @@
 package com.kriti.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +20,9 @@ import com.kriti.login.data.RegDbHelper;
  */
 
 public class LoginActivity extends AppCompatActivity {
-    private String et_username,et_password;
-    private EditText username,password;
+    public String et_username,et_password;
+    public EditText username;
+    private EditText password;
     boolean valid = true;
 
     @Override
@@ -71,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void onSignUpSuccess(){
         if(valid==true){
+            SharedPreferences sharedPreferences = this.getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
             Log.i("username", et_username);
             Log.i("password", et_password);
             RegDbHelper regDbHelper = new RegDbHelper(this);
@@ -88,6 +93,11 @@ public class LoginActivity extends AppCompatActivity {
            }
            else if(result==2){
                Toast.makeText(getApplicationContext(), "Logged In successfully", Toast.LENGTH_SHORT).show();
+               Intent intent = new Intent(LoginActivity.this, Dashboard.class);
+              // startActivity(intent);
+               editor.putString("UName", et_username);
+               editor.commit();
+
            }
            Log.isLoggable("result" ,result);
         }
