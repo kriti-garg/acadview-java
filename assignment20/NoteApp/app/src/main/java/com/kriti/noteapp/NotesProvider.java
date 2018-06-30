@@ -41,7 +41,21 @@ public class NotesProvider extends ContentProvider {
                       String[] selectionArgs) { return 0;}
                      @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-                        String sortOrder){ return null;}
+                        String sortOrder){
+                         SQLiteDatabase database = mDbHelper.getReadableDatabase();
+                         // This cursor will hold the result of the query
+                         Cursor cursor;
+
+                         // Figure out if the URI matcher can match the URI to a specific code
+                         int match = sUriMatcher.match(uri);
+
+                         cursor = database.query(NoteContract.NoteEntry.TABLE_NAME, projection, selection, selectionArgs,
+                                 null, null, sortOrder);
+                         cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
+                         // Return the cursor
+                         return cursor;
+                     }
  @Override
         public int delete(Uri uri, String selection, String[] selectionArgs) {
                                     return  0;

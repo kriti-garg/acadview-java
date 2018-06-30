@@ -10,8 +10,11 @@ import android.provider.BaseColumns;
 final class NoteContract {
     private NoteContract(){ }
     public static final String CONTENT_AUTHORITY = "com.kriti.noteapp";
+
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-    public static final String PATH_NOTES = "notes";
+
+    public static final String PATH_NOTES = "n_detail";
+
     public final static class NoteEntry implements BaseColumns {
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_NOTES);
         public static final String CONTENT_ITEM_TYPE =

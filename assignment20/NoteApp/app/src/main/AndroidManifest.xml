@@ -26,7 +26,7 @@
         </activity>
         <provider
             android:name=".NotesProvider"
-            android:authorities="com.kriti.NoteApp"
+            android:authorities="com.kriti.noteapp"
             android:exported="false" />
     </application>
 
